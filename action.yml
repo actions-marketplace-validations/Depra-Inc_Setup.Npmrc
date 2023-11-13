@@ -6,17 +6,18 @@ branding:
   color: black
 
 inputs:
-  token:
-    required: true
-    description: 'NPM or Github authentication token'
+  scope:
+    default: ""
+    required: false
   domain:
     required: true
   registry:
     required: true
-  always-auth:
+  token:
+    required: true
+  always_auth:
     default: false
     required: false
-    description: 'Force npm to always require authentication when accessing the registry'
 
 runs:
   using: 'composite'
@@ -26,8 +27,14 @@ runs:
         echo "//${{inputs.domain}}/:_authToken=${{inputs.token}}" > .npmrc
         echo "registry=${{inputs.registry}}" >> .npmrc
 
-        if [["${{inputs.always-auth}}" = true]]; then
-          echo "always-auth=true" >> .npmrc
+        if ["${{inputs.scope}}" == ""]; then
+          echo "registry=${{inputs.registry}}" >> .npmrc
+        else
+          echo "@${{inputs.scope}}:registry=${{inputs.registry}}" >> .npmrc
+        fi
+
+        if ["${{inputs.always_auth}}" = true]; then
+          echo "always_auth=true" >> .npmrc
         fi
 
         cat ./.npmrc
