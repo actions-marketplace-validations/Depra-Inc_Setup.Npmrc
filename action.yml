@@ -1,0 +1,34 @@
+name: 'Setup.Npmrc'
+description: 'Create and configure .npmrc file'
+
+branding:
+  icon: file
+  color: black
+
+inputs:
+  token:
+    required: true
+    description: 'NPM or Github authentication token'
+  domain:
+    required: true
+  registry:
+    required: true
+  always-auth:
+    default: false
+    required: false
+    description: 'Force npm to always require authentication when accessing the registry'
+
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        echo "Creating .npmrc"
+        echo "//${{inputs.domain}}/:_authToken=${{inputs.token}}" > .npmrc
+        echo "registry=${{inputs.registry}}" >> .npmrc
+
+        if [["${{inputs.always-auth}}" = true]]; then
+          echo "always-auth=true" >> .npmrc
+        fi
+
+        cat ./.npmrc
+      shell: bash
