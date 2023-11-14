@@ -35,7 +35,7 @@ uses: Depra-Inc/Setup.Npmrc@v1
     scope: @EXAMPLE_SCOPE
     domain: @EXAMPLE_DOMAIN
     registry: @EXAMPLE_REGISTRY
-    always-auth: true
+    always_auth: true
 ```
 
 ## Example output
