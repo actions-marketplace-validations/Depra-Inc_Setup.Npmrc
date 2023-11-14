@@ -25,7 +25,6 @@ runs:
     - run: |
         echo "Creating .npmrc"
         echo "//${{inputs.domain}}/:_authToken=${{inputs.token}}" > .npmrc
-        echo "registry=${{inputs.registry}}" >> .npmrc
 
         if [ "${{inputs.scope}}" == "" ]; then
           echo "registry=${{inputs.registry}}" >> .npmrc
