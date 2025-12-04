@@ -25,15 +25,14 @@ runs:
     - run: |
         echo "Creating .npmrc"
         echo "//${{inputs.domain}}/:_authToken=${{inputs.token}}" > .npmrc
-        echo "registry=${{inputs.registry}}" >> .npmrc
 
-        if ["${{inputs.scope}}" == ""]; then
+        if [ "${{inputs.scope}}" == "" ]; then
           echo "registry=${{inputs.registry}}" >> .npmrc
         else
           echo "@${{inputs.scope}}:registry=${{inputs.registry}}" >> .npmrc
         fi
 
-        if ["${{inputs.always_auth}}" = true]; then
+        if [ "${{inputs.always_auth}}" = true ]; then
           echo "always_auth=true" >> .npmrc
         fi
 
